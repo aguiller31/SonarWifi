@@ -1,13 +1,13 @@
 #include "Communication_Service.h"
-#include "WiFi_Service.h"
+#include <Arduino.h>
 CommunicationService::CommunicationService()
 {
-
+this->ssid = "PaulEtAntoine";
+this->password = "987654321";
 }
 void CommunicationService::startWiFI()
 {
-  char *ssid = "PaulEtAntoine";
-  char *password = "987654321";
+  Serial.begin(9600);
   WifiService Wifi_service;
-  Wifi_service.setup(ssid,password);
+  Wifi_service.setup(this->ssid,this->password);
 }
