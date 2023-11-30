@@ -6,6 +6,8 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#include "Communication_Service.h"
+#include "Lidar_Service.h"
 /**
   * @class Application
   * @brief Classe Application 

@@ -4,7 +4,7 @@
  * @brief Fichier source de l'application
  *********************************************************************/
 #include "Application.h"
-#include "Communication_Service.h"
+
 
 Application::Application()
 {
@@ -20,8 +20,14 @@ Application::~Application()
 
 void Application::init(void)
 {
+  char * ssid = "PaulEtAntoine";
+  char * password = "987654321";
+
   CommunicationService comm;
-  comm.startWiFI();
+  comm.startWiFI(ssid, password);
+
+  LIDARService LIDAR;
+  LIDAR.setup();
 }
 
 

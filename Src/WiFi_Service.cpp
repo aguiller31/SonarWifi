@@ -1,10 +1,11 @@
 #include "WiFi_Service.h"
 
+#include <ESP8266WiFi.h>
 WifiService::WifiService()
 {
 
 }
-void WifiService::setup()
+void WifiService::setup(char * ssid, char * password)
 {
   IPAddress local_IP(192,168,4,22);
   IPAddress gateway(192,168,4,9);
@@ -13,7 +14,7 @@ void WifiService::setup()
   Serial.println(WiFi.softAPConfig(local_IP, gateway, subnet) ? "Ready" : "Failed!");
 
   Serial.print("Setting soft-AP ... ");
-  Serial.println(WiFi.softAP(this->ssid,this->passwd) ? "Ready" : "Failed!");
+  Serial.println(WiFi.softAP(ssid,password) ? "Ready" : "Failed!");
   //WiFi.softAP(ssid);
   //WiFi.softAP(ssid, password, channel, hidden, max_connection)
   
@@ -22,8 +23,7 @@ void WifiService::setup()
 }
 WifiService::WifiService(char * ssid, char * passwd)
 {
-  this->ssid = ssid;
-  this->passwd = passwd;
+
 }
 
 
