@@ -1,5 +1,6 @@
 #ifndef LIDAR_SERVICE
 #define LIDAR_SERVICE
+//https://github.com/stm32duino/VL53L4CD/tree/main
 #include <Arduino.h>
 #include <Wire.h>
 #include "vl53l4cd_class.h"
@@ -27,6 +28,7 @@ class LIDARService {
   private:
     void findI2C(void);
     VL53L4CD_Result_t results;
+    VL53L4CD sensor_vl53l4cd_sat;
 };
 
 #endif

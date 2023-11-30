@@ -3,11 +3,9 @@
 
 
 
-VL53L4CD sensor_vl53l4cd_sat(&Wire, D0);
 
-LIDARService::LIDARService()
+LIDARService::LIDARService():sensor_vl53l4cd_sat(&Wire, D0)
 {
-
 }
 void LIDARService::findI2C(){
 Serial.println();
@@ -44,20 +42,20 @@ void LIDARService::setup()
 
 
   // Configure VL53L4CD satellite component.
-  sensor_vl53l4cd_sat.begin();
+  this->sensor_vl53l4cd_sat.begin();
 
   // Switch off VL53L4CD satellite component.
-  sensor_vl53l4cd_sat.VL53L4CD_Off();
+  this->sensor_vl53l4cd_sat.VL53L4CD_Off();
 
   //Initialize VL53L4CD satellite component.
-  sensor_vl53l4cd_sat.InitSensor();
+  this->sensor_vl53l4cd_sat.InitSensor();
 
   // Program the highest possible TimingBudget, without enabling the
   // low power mode. This should give the best accuracy
-  sensor_vl53l4cd_sat.VL53L4CD_SetRangeTiming(200, 0);
+  this->sensor_vl53l4cd_sat.VL53L4CD_SetRangeTiming(200, 0);
 
   // Start Measurements
-  sensor_vl53l4cd_sat.VL53L4CD_StartRanging();
+  this->sensor_vl53l4cd_sat.VL53L4CD_StartRanging();
 }
 
 
@@ -70,15 +68,15 @@ void LIDARService::measure()
   
 
   do {
-    status = sensor_vl53l4cd_sat.VL53L4CD_CheckForDataReady(&NewDataReady);
+    status = this->sensor_vl53l4cd_sat.VL53L4CD_CheckForDataReady(&NewDataReady);
   } while (!NewDataReady);
 
   if ((!status) && (NewDataReady != 0)) {
     // (Mandatory) Clear HW interrupt to restart measurements
-    sensor_vl53l4cd_sat.VL53L4CD_ClearInterrupt();
+    this->sensor_vl53l4cd_sat.VL53L4CD_ClearInterrupt();
 
     // Read measured distance. RangeStatus = 0 means valid data
-    sensor_vl53l4cd_sat.VL53L4CD_GetResult(&(this->results));
+    this->sensor_vl53l4cd_sat.VL53L4CD_GetResult(&(this->results));
   }
 }
 
