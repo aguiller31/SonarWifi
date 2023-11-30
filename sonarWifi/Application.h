@@ -36,4 +36,5 @@ class Application
     */
     void run(void);
 };
+
 #endif
