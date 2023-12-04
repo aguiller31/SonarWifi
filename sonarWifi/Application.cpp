@@ -6,7 +6,7 @@
 #include "Application.h"
 
 
-Application::Application()
+Application::Application():communication(),LiDAR(),motor()
 {
   // Code
   ; 
@@ -20,32 +20,34 @@ Application::~Application()
 
 void Application::init(void)
 {
-  char * ssid = "PaulEtAntoine";
-  char * password = "987654321";
-
   char report[64];
-  //VL53L4CD_Result_t results;
-  CommunicationService comm;
-  comm.startWiFI(ssid, password);
+  Serial.begin(9600);
+  while(!Serial){} // Waiting for serial connection
+  communication.startWiFI();
+  communication.startServer();
 
-  LIDARService LIDAR;
-  LIDAR.setup();
-  while(1){
-    LIDAR.measure();
+
+  LiDAR.setup();
+  motor.setup();
+  motor.start();
+  /*while(1){
+    LiDAR.measure();
   
     snprintf(report, sizeof(report), "Status = %3u, Distance = %5u mm, Signal = %6u kcps/spad\r\n",
-             LIDAR.getRangeStatus(),
-             LIDAR.getDistance(),
-             LIDAR.getSignalRatePerSpadKcps());
+             LiDAR.getRangeStatus(),
+             LiDAR.getDistance(),
+             LiDAR.getSignalRatePerSpadKcps());
              
             
     Serial.print(report);
-  }
+  }*/
 }
 
 
 void Application::run(void)
 {
-  // Code
-    ;
+  LiDAR.measure();
+  communication.sendEvent('d',LiDAR.getDistance());
+  motor.
+   communication.sendEvent('d',"LiDAR.getDistance());
 }

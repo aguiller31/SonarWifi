@@ -1,13 +1,22 @@
 #include "Communication_Service.h"
 #include <Arduino.h>
-CommunicationService::CommunicationService()
+char * ssid = "PaulEtAntoine";
+char * password = "987654321";
+CommunicationService::CommunicationService():wifi(ssid,password)
 {
 
 }
-void CommunicationService::startWiFI(char  * ssid, char * passwd)
+void CommunicationService::startWiFI()
 {
-  Serial.begin(9600);
-  while(!Serial){} // Waiting for serial connection
-  WifiService Wifi_service(ssid,passwd);
-  Wifi_service.setup();
+  this->wifi.setup();
+}
+void CommunicationService::startServer()
+{
+  this->server.setup();
+  this->server.start();
+}
+
+void CommunicationService::sendEvent(char c, int n)
+{
+  this->server.sendEvent(c,n);
 }

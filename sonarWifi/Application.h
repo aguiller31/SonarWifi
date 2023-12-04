@@ -5,9 +5,9 @@
  *********************************************************************/
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
-
 #include "Communication_Service.h"
 #include "Lidar_Service.h"
+#include "Motor_Service.h"
 /**
   * @class Application
   * @brief Classe Application 
@@ -35,6 +35,11 @@ class Application
      * @brief Fonction de lancement de l'application
     */
     void run(void);
+
+    private:
+      CommunicationService communication;
+      LIDARService LiDAR;
+      MotorService motor;
 };
 
 #endif

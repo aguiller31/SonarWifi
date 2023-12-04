@@ -81,10 +81,10 @@ void LIDARService::measure()
 }
 
 uint16_t LIDARService::getDistance(void){
-  uint16_t distance_mm = this->results.distance_mm - 21;
-  results.distance_mm = (results.distance_mm  > 0) ? results.distance_mm :0;
-  this->results.distance_mm = (results.distance_mm  > 2000) ? results.distance_mm :-1;
-  return results.distance_mm;
+  uint16_t distance_mm = this->results.distance_mm - 2;
+  distance_mm = (distance_mm  > 0) ? distance_mm :0;
+  distance_mm = (distance_mm  > 2000) ? 0 :distance_mm;
+  return distance_mm;
 }
 uint8_t LIDARService::getRangeStatus(void){
   return this->results.range_status;
