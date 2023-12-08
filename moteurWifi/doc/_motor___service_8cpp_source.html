@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MoteurWifi:  Fichier source de Motor_Service.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">MoteurWifi<span id="projectnumber">&#160;1</span>
+   </div>
+   <div id="projectbrief">La partie moteur du projet. Permet de faire tourner le capteur et envoie l&#39;angle au serveur.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_motor___service_8cpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Motor_Service.cpp</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*********************************************************************</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> * @file  Motor_Service.cpp</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> * @author Guillermin Antoine et Paul Gadanho</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> * @brief Implémentation de la classe MotorService.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> *********************************************************************/</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Motor_Service.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">const</span> std::vector&lt;std::vector&lt;int&gt;&gt; steps = {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    {1, 0, 0, 1},</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    {1, 0, 0, 0},</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {1, 1, 0, 0},</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    {0, 1, 0, 0},</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    {0, 1, 1, 0},</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {0, 0, 1, 0},</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {0, 0, 1, 1},</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {0, 0, 0, 1}</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="class_motor_service.html#a22cfe7fe7e775e5cb19a7a6aff294e6f">   24</a></span><a class="code hl_function" href="class_motor_service.html#a22cfe7fe7e775e5cb19a7a6aff294e6f">MotorService::MotorService</a>(<span class="keywordtype">void</span>) : delayTime(5), stepCounter(0), previousAngle(0) {}</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="class_motor_service.html#a7cc09c574c7ce418b0cd6cb4b4999cf8">   30</a></span><a class="code hl_function" href="class_motor_service.html#a22cfe7fe7e775e5cb19a7a6aff294e6f">MotorService::MotorService</a>(<span class="keywordtype">int</span> d) : delayTime(d), stepCounter(0), previousAngle(0) {}</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_motor_service.html#a603290726a661df59d6fbe40d4504a88">   35</a></span><a class="code hl_function" href="class_motor_service.html#a603290726a661df59d6fbe40d4504a88">MotorService::~MotorService</a>() {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    Serial.println(<span class="stringliteral">&quot;La classe Moteur a été détruite&quot;</span>);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>}</div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_motor_service.html#a7d2a870548d30116bdbb2d264414fe6b">   43</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="class_motor_service.html#a7d2a870548d30116bdbb2d264414fe6b">MotorService::setStep</a>(<span class="keywordtype">int</span> step) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    digitalWrite(MOTOR_PIN_1, steps[<a class="code hl_function" href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">step</a>][0]);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    digitalWrite(MOTOR_PIN_2, steps[<a class="code hl_function" href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">step</a>][1]);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    digitalWrite(MOTOR_PIN_3, steps[<a class="code hl_function" href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">step</a>][2]);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    digitalWrite(MOTOR_PIN_4, steps[<a class="code hl_function" href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">step</a>][3]);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">   54</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">MotorService::step</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = steps.begin(); it != steps.end(); ++it) {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        this-&gt;<a class="code hl_function" href="class_motor_service.html#a7d2a870548d30116bdbb2d264414fe6b">setStep</a>(it - steps.begin());</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        delay(this-&gt;delayTime);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        this-&gt;stepCounter++;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    this-&gt;<a class="code hl_function" href="class_motor_service.html#ad317eae3cc0f06adc9bd46ccdc226e56">calculateCurrentAngle</a>();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">if</span> (this-&gt;currentAngle != this-&gt;previousAngle) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        this-&gt;previousAngle = this-&gt;currentAngle;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">return</span> this-&gt;currentAngle;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">return</span> -1; <span class="comment">// Si l&#39;angle n&#39;a pas augmenté.</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
+</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="foldopen" id="foldopen00071" data-start="{" data-end="}">
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="class_motor_service.html#ad317eae3cc0f06adc9bd46ccdc226e56">   71</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="class_motor_service.html#ad317eae3cc0f06adc9bd46ccdc226e56">MotorService::calculateCurrentAngle</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>{</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    this-&gt;currentAngle = (this-&gt;stepCounter % MOTOR_STEPS_PER_REV) * (360.0 / MOTOR_STEPS_PER_REV);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>}</div>
+</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="foldopen" id="foldopen00080" data-start="{" data-end="}">
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="class_motor_service.html#af51698e8a72bf8e3fbb172c2f5857e48">   80</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="class_motor_service.html#af51698e8a72bf8e3fbb172c2f5857e48">MotorService::setPreviousAngle</a>(<span class="keywordtype">int</span> angle) {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    this-&gt;previousAngle = angle;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
+</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="class_motor_service.html#aa93de47a290e9516547236d48aa27fe2">   88</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="class_motor_service.html#aa93de47a290e9516547236d48aa27fe2">MotorService::getPreviousAngle</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">return</span> this-&gt;previousAngle;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
+</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="class_motor_service.html#ae94b97399942e2e290f2f6c5298b3b7c">   96</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="class_motor_service.html#ae94b97399942e2e290f2f6c5298b3b7c">MotorService::getCurrentAngle</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordflow">return</span> currentAngle;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
+</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="foldopen" id="foldopen00104" data-start="{" data-end="}">
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="class_motor_service.html#a8e7c487f8ddd6d31dc16758474fc0535">  104</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="class_motor_service.html#a8e7c487f8ddd6d31dc16758474fc0535">MotorService::setDelay</a>(<span class="keywordtype">int</span> d) {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    this-&gt;delayTime = d;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="foldopen" id="foldopen00112" data-start="{" data-end="}">
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="class_motor_service.html#a058d063370d6b6d5da58e3abfed34961">  112</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="class_motor_service.html#a058d063370d6b6d5da58e3abfed34961">MotorService::getDelay</a>(<span class="keywordtype">void</span>) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordflow">return</span> this-&gt;delayTime;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="class_motor_service.html#a827302665225bb0db064faafd8c84b91">  119</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="class_motor_service.html#a827302665225bb0db064faafd8c84b91">MotorService::setup</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>{</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    pinMode(MOTOR_PIN_1, OUTPUT);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    pinMode(MOTOR_PIN_2, OUTPUT);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    pinMode(MOTOR_PIN_3, OUTPUT);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    pinMode(MOTOR_PIN_4, OUTPUT);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
+</div>
+<div class="ttc" id="aclass_motor_service_html_a058d063370d6b6d5da58e3abfed34961"><div class="ttname"><a href="class_motor_service.html#a058d063370d6b6d5da58e3abfed34961">MotorService::getDelay</a></div><div class="ttdeci">int getDelay(void)</div><div class="ttdoc">Obtient le délai entre les étapes du moteur.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00112">Motor_Service.cpp:112</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_a22cfe7fe7e775e5cb19a7a6aff294e6f"><div class="ttname"><a href="class_motor_service.html#a22cfe7fe7e775e5cb19a7a6aff294e6f">MotorService::MotorService</a></div><div class="ttdeci">MotorService(void)</div><div class="ttdoc">Constructeur par défaut de la classe MotorService.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00024">Motor_Service.cpp:24</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_a526c5dee91f67fca101a4cc24741e2cf"><div class="ttname"><a href="class_motor_service.html#a526c5dee91f67fca101a4cc24741e2cf">MotorService::step</a></div><div class="ttdeci">int step(void)</div><div class="ttdoc">Effectue une étape du moteur et met à jour l'angle actuel.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00054">Motor_Service.cpp:54</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_a603290726a661df59d6fbe40d4504a88"><div class="ttname"><a href="class_motor_service.html#a603290726a661df59d6fbe40d4504a88">MotorService::~MotorService</a></div><div class="ttdeci">~MotorService(void)</div><div class="ttdoc">Destructeur de la classe MotorService.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00035">Motor_Service.cpp:35</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_a7d2a870548d30116bdbb2d264414fe6b"><div class="ttname"><a href="class_motor_service.html#a7d2a870548d30116bdbb2d264414fe6b">MotorService::setStep</a></div><div class="ttdeci">void setStep(int)</div><div class="ttdoc">Configure les broches du moteur en fonction de l'étape spécifiée.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00043">Motor_Service.cpp:43</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_a827302665225bb0db064faafd8c84b91"><div class="ttname"><a href="class_motor_service.html#a827302665225bb0db064faafd8c84b91">MotorService::setup</a></div><div class="ttdeci">void setup(void)</div><div class="ttdoc">Initialise les broches du moteur en tant que sorties.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00119">Motor_Service.cpp:119</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_a8e7c487f8ddd6d31dc16758474fc0535"><div class="ttname"><a href="class_motor_service.html#a8e7c487f8ddd6d31dc16758474fc0535">MotorService::setDelay</a></div><div class="ttdeci">void setDelay(int)</div><div class="ttdoc">Définit le délai entre les étapes du moteur.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00104">Motor_Service.cpp:104</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_aa93de47a290e9516547236d48aa27fe2"><div class="ttname"><a href="class_motor_service.html#aa93de47a290e9516547236d48aa27fe2">MotorService::getPreviousAngle</a></div><div class="ttdeci">int getPreviousAngle(void)</div><div class="ttdoc">Obtient l'angle précédent.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00088">Motor_Service.cpp:88</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_ad317eae3cc0f06adc9bd46ccdc226e56"><div class="ttname"><a href="class_motor_service.html#ad317eae3cc0f06adc9bd46ccdc226e56">MotorService::calculateCurrentAngle</a></div><div class="ttdeci">void calculateCurrentAngle(void)</div><div class="ttdoc">Calcule l'angle actuel en fonction du nombre total d'étapes effectuées.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00071">Motor_Service.cpp:71</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_ae94b97399942e2e290f2f6c5298b3b7c"><div class="ttname"><a href="class_motor_service.html#ae94b97399942e2e290f2f6c5298b3b7c">MotorService::getCurrentAngle</a></div><div class="ttdeci">int getCurrentAngle(void)</div><div class="ttdoc">Obtient l'angle actuel.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00096">Motor_Service.cpp:96</a></div></div>
+<div class="ttc" id="aclass_motor_service_html_af51698e8a72bf8e3fbb172c2f5857e48"><div class="ttname"><a href="class_motor_service.html#af51698e8a72bf8e3fbb172c2f5857e48">MotorService::setPreviousAngle</a></div><div class="ttdeci">void setPreviousAngle(int)</div><div class="ttdoc">Définit l'angle précédent à une valeur spécifiée.</div><div class="ttdef"><b>Definition</b> <a href="_motor___service_8cpp_source.html#l00080">Motor_Service.cpp:80</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>Motor_Service.cpp</b></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

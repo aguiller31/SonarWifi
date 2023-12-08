@@ -1,110 +1,133 @@
+/*********************************************************************
+ * @file  Lidar_Service.cpp
+ * @author Guillermin Antoine et Paul Gadanho
+ * @brief Implémentation de la classe LIDARService.
+ *********************************************************************/
+
 #include "Lidar_Service.h"
 
+/**
+ * @class LIDARService
+ * @brief Gère les fonctionnalités du capteur LIDAR VL53L4CD.
+ * Cette classe fournit des méthodes pour configurer, mesurer et récupérer des données du capteur LIDAR.
+ */
 
-
-
-
-LIDARService::LIDARService():sensor_vl53l4cd_sat(&Wire, D0)
+/**
+ * @brief Constructeur de la classe LIDARService.
+ * Initialise le capteur LIDAR VL53L4CD.
+ */
+LIDARService::LIDARService() : VL53L4CD(&Wire, D0)
 {
 }
-void LIDARService::findI2C(){
-Serial.println();
-  Serial.println("Start I2C scanner ...");
-  Serial.print("\r\n");
-  byte count = 0;
-  
-  
-  for (byte i = 8; i < 120; i++)
-  {
-    Wire.beginTransmission(i);
-    if (Wire.endTransmission() == 0)
-      {
-      Serial.print("Found I2C Device: ");
-      Serial.print(" (0x");
-      Serial.print(i, HEX);
-      Serial.println(")");
-      count++;
-      delay(1);
-      }
-  }
-  Serial.print("\r\n");
-  Serial.println("Finish I2C scanner");
-  Serial.print("Found ");
-  Serial.print(count, HEX);
-  Serial.println(" Device(s).");
-}
+
+/**
+ * @brief Configure le capteur LIDAR.
+ * Initialise le capteur, le configure et démarre la mesure.
+ */
 void LIDARService::setup()
 {
-  // Initialize I2C bus.
   Wire.begin();
-  this->findI2C();
-  
-
-
-  // Configure VL53L4CD satellite component.
-  this->sensor_vl53l4cd_sat.begin();
-
-  // Switch off VL53L4CD satellite component.
-  this->sensor_vl53l4cd_sat.VL53L4CD_Off();
-
-  //Initialize VL53L4CD satellite component.
-  this->sensor_vl53l4cd_sat.InitSensor();
-
-  // Program the highest possible TimingBudget, without enabling the
-  // low power mode. This should give the best accuracy
-  this->sensor_vl53l4cd_sat.VL53L4CD_SetRangeTiming(200, 0);
-
-  // Start Measurements
-  this->sensor_vl53l4cd_sat.VL53L4CD_StartRanging();
+  this->begin();
+  this->VL53L4CD_Off();
+  this->InitSensor();
+  this->VL53L4CD_SetRangeTiming(200, 0);
+  this->VL53L4CD_StartRanging();
 }
 
-
-
-
+/**
+ * @brief Effectue une mesure avec le capteur LIDAR.
+ * Attend la disponibilité des nouvelles données et récupère le résultat.
+ * Lance une exception en cas d'échec de la mesure.
+ */
 void LIDARService::measure()
 {
   uint8_t NewDataReady = 0;
   uint8_t status;
-  
 
   do {
-    status = this->sensor_vl53l4cd_sat.VL53L4CD_CheckForDataReady(&NewDataReady);
+    status = VL53L4CD_CheckForDataReady(&NewDataReady);
   } while (!NewDataReady);
 
   if ((!status) && (NewDataReady != 0)) {
-    // (Mandatory) Clear HW interrupt to restart measurements
-    this->sensor_vl53l4cd_sat.VL53L4CD_ClearInterrupt();
-
-    // Read measured distance. RangeStatus = 0 means valid data
-    this->sensor_vl53l4cd_sat.VL53L4CD_GetResult(&(this->results));
+    this->VL53L4CD_ClearInterrupt();
+    this->VL53L4CD_GetResult(&(this->results));
+  } else {
+    throw std::runtime_error("Échec de la mesure LIDAR");
   }
 }
 
-uint16_t LIDARService::getDistance(void){
+/**
+ * @brief Récupère la distance mesurée par le capteur LIDAR.
+ * Ajuste la valeur pour assurer qu'elle est dans une plage valide.
+ * @return La distance mesurée en millimètres.
+ */
+uint16_t LIDARService::getDistance(void)
+{
   uint16_t distance_mm = this->results.distance_mm - 2;
-  distance_mm = (distance_mm  > 0) ? distance_mm :0;
-  distance_mm = (distance_mm  > 2000) ? 0 :distance_mm;
+  distance_mm = (distance_mm > 0) ? distance_mm : 0;
+  distance_mm = (distance_mm > 2000) ? 0 : distance_mm;
   return distance_mm;
 }
-uint8_t LIDARService::getRangeStatus(void){
+
+/**
+ * @brief Récupère le statut de plage du capteur LIDAR.
+ * @return Le statut de plage.
+ */
+uint8_t LIDARService::getRangeStatus(void)
+{
   return this->results.range_status;
 }
-uint16_t LIDARService::getAmbientRatePerSpadKcps(void){
+
+/**
+ * @brief Récupère le taux ambiant par SPAD du capteur LIDAR.
+ * @return Le taux ambiant par SPAD en kilo counts par seconde (kcps).
+ */
+uint16_t LIDARService::getAmbientRatePerSpadKcps(void)
+{
   return this->results.ambient_per_spad_kcps;
 }
 
-uint16_t LIDARService::getAmbientRateKcps(void){
+/**
+ * @brief Récupère le taux ambiant du capteur LIDAR.
+ * @return Le taux ambiant en kilo counts par seconde (kcps).
+ */
+uint16_t LIDARService::getAmbientRateKcps(void)
+{
   return this->results.ambient_rate_kcps;
 }
-uint16_t LIDARService::getSignalRateKcps(void){
+
+/**
+ * @brief Récupère le taux de signal du capteur LIDAR.
+ * @return Le taux de signal en kilo counts par seconde (kcps).
+ */
+uint16_t LIDARService::getSignalRateKcps(void)
+{
   return this->results.signal_rate_kcps;
 }
-uint16_t LIDARService::getSignalRatePerSpadKcps(void){
+
+/**
+ * @brief Récupère le taux de signal par SPAD du capteur LIDAR.
+ * @return Le taux de signal par SPAD en kilo counts par seconde (kcps).
+ */
+uint16_t LIDARService::getSignalRatePerSpadKcps(void)
+{
   return this->results.signal_per_spad_kcps;
 }
-uint16_t LIDARService::getNumberOfSpad(void){
+
+/**
+ * @brief Récupère le nombre de SPAD du capteur LIDAR.
+ * @return Le nombre de SPAD.
+ */
+uint16_t LIDARService::getNumberOfSpad(void)
+{
   return this->results.number_of_spad;
 }
-uint16_t LIDARService::getSigmaMm(void){
+
+/**
+ * @brief Récupère l'écart-type en millimètres du capteur LIDAR.
+ * @return L'écart-type en millimètres.
+ */
+uint16_t LIDARService::getSigmaMm(void)
+{
   return this->results.sigma_mm;
 }
