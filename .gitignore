@@ -32,3 +32,6 @@
 *.app
 
 **/autres/
+
+Doxyfile
+**/doxygen-awesome-css/
