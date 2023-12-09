@@ -1,6 +1,7 @@
 # Sonar WiFi
 Ceci est un projet de Sonar Wifi. Il est programmé sur 2 esp8266 (Wemos D1 Mini et NodeMCU), l'un servant à la rotation d'un moteur et l'autre à la mesure des distances via un capteur LiDAR.
 
+Documentation : [https://aguiller31.github.io/SonarWifi/](https://aguiller31.github.io/SonarWifi/)
 <p align="center">
   <img width="460"  src="https://github.com/aguiller31/SonarWifi/assets/128867138/a90ea6bf-9c80-44ae-a215-5af07b197aa0">
 </p>
