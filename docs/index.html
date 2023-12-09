@@ -25,6 +25,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="Capture d’écran 2023-12-09 153540.png"/></td>
   <td id="projectalign">
    <div id="projectname">LiDARWifi<span id="projectnumber">&#160;1</span>
    </div>
@@ -94,7 +95,116 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">LiDARWifi Documentation</div></div>
 </div><!--header-->
 <div class="contents">
+<article class="markdown-body entry-content container-lg" itemprop="text"><h1 tabindex="-1" dir="auto">Sonar WiFi</h1>
+<p dir="auto">Ceci est un projet de Sonar Wifi. Il est programmé sur 2 esp8266 (Wemos D1 Mini et NodeMCU), l'un servant à la rotation d'un moteur et l'autre à la mesure des distances via un capteur LiDAR.</p>
+<p dir="auto">Documentation : <a href="https://aguiller31.github.io/SonarWifi/" rel="nofollow">https://aguiller31.github.io/SonarWifi/</a></p>
+<p align="center" dir="auto">
+  <a target="_blank" rel="noopener noreferrer" href="https://private-user-images.githubusercontent.com/128867138/289276799-a90ea6bf-9c80-44ae-a215-5af07b197aa0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDIxMzIzMTgsIm5iZiI6MTcwMjEzMjAxOCwicGF0aCI6Ii8xMjg4NjcxMzgvMjg5Mjc2Nzk5LWE5MGVhNmJmLTljODAtNDRhZS1hMjE1LTVhZjA3YjE5N2FhMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMjA5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTIwOVQxNDI2NThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MGJlYWY3NGEwZjVlMTFkZmVhOWEyODE0MzIxZGEwYjA1ZGQzY2FmNmE2NWM5NTU3Yjc3MDRhZWZlZjgyNzE1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.pxK_nf0bzUWY2QYc3ju-oPvDhEN1VGuLzEho1Z2rp54"><img width="460" src="https://private-user-images.githubusercontent.com/128867138/289276799-a90ea6bf-9c80-44ae-a215-5af07b197aa0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDIxMzIzMTgsIm5iZiI6MTcwMjEzMjAxOCwicGF0aCI6Ii8xMjg4NjcxMzgvMjg5Mjc2Nzk5LWE5MGVhNmJmLTljODAtNDRhZS1hMjE1LTVhZjA3YjE5N2FhMC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMjA5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTIwOVQxNDI2NThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT01MGJlYWY3NGEwZjVlMTFkZmVhOWEyODE0MzIxZGEwYjA1ZGQzY2FmNmE2NWM5NTU3Yjc3MDRhZWZlZjgyNzE1JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.pxK_nf0bzUWY2QYc3ju-oPvDhEN1VGuLzEho1Z2rp54" style="max-width: 100%;"></a>
+</p>
+<h2 tabindex="-1" dir="auto">Compilation</h2>
+<p dir="auto">Nous avons utiliser VS Code associé à l'extension PlatformIO pour écrire et compiler les programmes.</p>
+<p dir="auto"><strong>Pourquoi PlatformIO plutôt que Arduino IDE ?</strong></p>
+<p dir="auto">Il semble que l'IDE d'Arduino n'intégre pas de compilateur pouvant compiler certaines bibliothèques écrites en C dont nous avons besoin pour ce projet. Nous aurions pu les ré-écrire en C++ mais cela aurait pris beaucoup de temps, ressource limitée pour ce BE. PlatformIO nous a permis de gagner du temps en nous soustrayant à ce problème.</p>
+<h3 tabindex="-1" dir="auto">Compilation de la partie moteur</h3>
+<p dir="auto">Le moteur est uploadé sur le Wemos D1 Mini.</p>
+<p dir="auto">Pour cette partie, nous avons fait le choix de renvoyer la mesure de l'angle actuel du moteur vers le serveur. Dès lors pour ne pas ralentir la rotation du moteur, nous avons décidé de faire des requêtes GET asynchrones. Pour ce faire nous avons utiliser la bibliothèque <a href="https://github.com/khoih-prog/AsyncHTTPRequest_Generic">AsyncHTTPRequest_Generic</a>, qui nécessite une configuration particulière de fichier platform.ini :</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto"><pre class="notranslate"><code>[platformio]
+default_envs = ESP8266
+
+[env]
+lib_compat_mode = strict
+lib_ldf_mode = chain+
+build_flags = 
+	-D DEBUG_ESP_PORT=Serial
+
+[env:ESP8266]
+platform = espressif8266
+framework = arduino
+lib_deps = khoih-prog/AsyncHTTPRequest_Generic@^1.13.0
+board = d1_mini
+
+[env:d1_mini]
+platform = espressif8266
+board = d1_mini
+framework = arduino
+lib_deps = khoih-prog/AsyncHTTPRequest_Generic@^1.13.0
+</code></pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="[platformio]
+default_envs = ESP8266
+
+[env]
+lib_compat_mode = strict
+lib_ldf_mode = chain+
+build_flags = 
+	-D DEBUG_ESP_PORT=Serial
+
+[env:ESP8266]
+platform = espressif8266
+framework = arduino
+lib_deps = khoih-prog/AsyncHTTPRequest_Generic@^1.13.0
+board = d1_mini
+
+[env:d1_mini]
+platform = espressif8266
+board = d1_mini
+framework = arduino
+lib_deps = khoih-prog/AsyncHTTPRequest_Generic@^1.13.0" tabindex="0" role="button">
+ 
+    </clipboard-copy>
+  </div></div>
+<p dir="auto">Par ailleurs cette bibliothèque nécessite d'être incluse une première fois dans le <em>.ino</em> : <code>#include &lt;AsyncHTTPRequest_Generic.h&gt;</code>. Ensuite on l'inclus dans le service <code>#include &lt;AsyncHTTPRequest_Generic.hpp&gt;</code> sinon il y a une erreur à la compilation (rédefintion), ce comportement est décrit dans la documentation de la bibliothèque.</p>
+<h4 tabindex="-1" dir="auto">Les bibliothèques utilisées :</h4>
+<ul dir="auto">
+<li><a href="https://github.com/khoih-prog/AsyncHTTPRequest_Generic">AsyncHTTPRequest_Generic</a> (Cette librairie installe automatiquement les librairies dont elle dépend)</li>
+</ul>
+<h3 tabindex="-1" dir="auto">Compilation de la partie LiDAR</h3>
+<p dir="auto">Le LiDAR est uploadé sur le NodeMCU.</p>
+<p dir="auto">Dans cette partie, nous avons ajouté la gestion de certaines exceptions (il n'était pas possible de le faire dans la partie précédente). Pour ce faire il faut ajouter un flag à la compilation : <code>-fexceptions</code>
+Ce fichier platform.ini est testé et fonctionnel :</p>
+<div class="snippet-clipboard-content notranslate position-relative overflow-auto"><pre class="notranslate"><code>[env:LIDAR_WIFI]
+platform = espressif8266
+framework = arduino
+lib_deps = 
+	stm32duino/STM32duino VL53L4CD@^1.0.3
+	ottowinter/ESPAsyncTCP-esphome@^1.2.3
+	ottowinter/ESPAsyncWebServer-esphome@^3.1.0
+build_flags = -fexceptions
+build_unflags = -fno-exceptions
+</code></pre><div class="zeroclipboard-container">
+    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="[env:LIDAR_WIFI]
+platform = espressif8266
+framework = arduino
+lib_deps = 
+	stm32duino/STM32duino VL53L4CD@^1.0.3
+	ottowinter/ESPAsyncTCP-esphome@^1.2.3
+	ottowinter/ESPAsyncWebServer-esphome@^3.1.0
+build_flags = -fexceptions
+build_unflags = -fno-exceptions" tabindex="0" role="button">
+   </clipboard-copy>
+  </div></div>
+<h4 tabindex="-1" dir="auto">Les bibliothèques utilisées :</h4>
+<ul dir="auto">
+<li><a href="https://github.com/stm32duino/VL53L4CD">VL53L4CD</a> <em>pour l'utilisation du LiDAR éponyme</em>.</li>
+<li><a href="https://github.com/OttoWinter/ESPAsyncTCP">ESPAsyncTCP</a> <em>pour la communication TCP du serveur</em></li>
+<li><a href="https://github.com/me-no-dev/ESPAsyncWebServer">ESPAsyncWebServer</a> <em>pour la création du serveur</em></li>
+</ul>
+<h2 tabindex="-1" dir="auto">Exécution du programme</h2>
+<ol dir="auto">
+<li>alimenter le moteur avec source de tension 5V (1A min)</li>
+<li>alimenter la board NodeMCU en premier avec une source de 5 ou 3.3V; en effet le WiFi est "créé" par cette board, il faut donc lui laisser le temps de l'émettre.</li>
+<li>alimenter la board Wemos dans un second temps avec une source de 5 ou 3.3V. Après quelques secondes, elle dervait être connectée au réseau : <strong>LidarSonarWifi</strong> et le moteur doit commencer à tourner.</li>
+<li>avec un appareil externe, se connecter au réseau : <strong>LidarSonarWifi</strong> dont le mot de passe est <strong>987654321</strong>.</li>
+<li>se rendre à l'adresse : <a href="http://192.168.4.22/" rel="nofollow">http://192.168.4.22/</a>, vous devriez voir l'interface du Sonar et des points rouges correspondants aux distances mesurées par le LiDAR à un angle donné.</li>
+<li>placer des objets à une distance entre 0 et 45 cm (valeur arbitraire) et observer</li>
+</ol>
+<p align="center" dir="auto">
+  <a target="_blank" rel="noopener noreferrer" href="https://private-user-images.githubusercontent.com/128867138/287028458-25cf6177-a44c-4c8d-8e5d-af7f1caad1ea.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDIxMzIzMTgsIm5iZiI6MTcwMjEzMjAxOCwicGF0aCI6Ii8xMjg4NjcxMzgvMjg3MDI4NDU4LTI1Y2Y2MTc3LWE0NGMtNGM4ZC04ZTVkLWFmN2YxY2FhZDFlYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMjA5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTIwOVQxNDI2NThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kNDEwNWEzN2FhZjU5ZDZmYTZjM2FjNmRlZjQ5YjUwNTdmMWVmY2U4YjczYmYxNGQ0YWMxMGUxOTg3M2RjM2ZjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.HeCSl6YZAjaO2u6uRc-tECTE-nv5XmU1Qq7VZ0jQevg"><img src="https://private-user-images.githubusercontent.com/128867138/287028458-25cf6177-a44c-4c8d-8e5d-af7f1caad1ea.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTEiLCJleHAiOjE3MDIxMzIzMTgsIm5iZiI6MTcwMjEzMjAxOCwicGF0aCI6Ii8xMjg4NjcxMzgvMjg3MDI4NDU4LTI1Y2Y2MTc3LWE0NGMtNGM4ZC04ZTVkLWFmN2YxY2FhZDFlYS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBSVdOSllBWDRDU1ZFSDUzQSUyRjIwMjMxMjA5JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDIzMTIwOVQxNDI2NThaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1kNDEwNWEzN2FhZjU5ZDZmYTZjM2FjNmRlZjQ5YjUwNTdmMWVmY2U4YjczYmYxNGQ0YWMxMGUxOTg3M2RjM2ZjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZhY3Rvcl9pZD0wJmtleV9pZD0wJnJlcG9faWQ9MCJ9.HeCSl6YZAjaO2u6uRc-tECTE-nv5XmU1Qq7VZ0jQevg" width="10%" height="10%" style="max-width: 100%;"></a>
+  <br>
+<b>INSA Toulouse 2023-2024 - 4ème année : Automatique et Electronique / Systèmes Embarqués<br>Antoine Guillermin et Paul Gadanho</b>
+</p>
+</article>
 </div><!-- contents -->
+
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
