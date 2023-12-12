@@ -152,7 +152,6 @@ const rotationAngle = (rotIntervalCnt*0.099) % 360; // Rotation basée sur le te
 }
 }
 // Fonction pour placer le point à partir d'un angle et d'une distance
-// Fonction pour placer le point à partir d'un angle et d'une distance
 function placePoint(angle, distance) {
 angle = degreesToRadians(angle);
     const x = distance * Math.cos(angle);
@@ -161,27 +160,13 @@ angle = degreesToRadians(angle);
     point.x = canvas.width / 2 + x;
     point.y = canvas.height / 2 + y;
     points[simN%360] = {x:point.x, y:point.y};
-   /* isPointVisible = true;
-    drawSonar();
-
-    // Masquer le point après la durée spécifiée
-    setTimeout(() => {
-        isPointVisible = false;
-        drawSonar();
-    }, pointDuration);*/
 }
 
 
 // Mettre à jour le canvas à intervalles réguliers
 function updateCanvas() {
     drawSonar();
-    //requestAnimationFrame(updateCanvas);
 }
-
-// Démarrer la mise à jour du canvas
-//updateCanvas();
-
-// Exemple d'utilisation : placer un point à un angle aléatoire et une distance aléatoire
 
 function toggleRotation() {
     rotateNeedle = !rotateNeedle;
@@ -189,7 +174,6 @@ function toggleRotation() {
 
 if (!!window.EventSource) {
  var source = new EventSource('/events');
- 
  source.addEventListener('open', function(e) {
   console.log("Events Connected");
  }, false);
@@ -204,10 +188,7 @@ if (!!window.EventSource) {
  }, false);
  
  source.addEventListener('d',distanceDeal, false);
-
  source.addEventListener('a', angleDeal, false);
-
- 
 }
 
 function angleDeal(e){
@@ -220,24 +201,11 @@ function angleDeal(e){
   console.log("a", e.data);
   placePoint(e.data,dist);
   simN++;
- //placePoint(e.data,dist);
 }
 function distanceDeal(e){
     console.log("d", e.data);
   dist = e.data;
 }
-/*
-function simulate(){
-
-    distanceDeal({
-        data: Math.floor(Math.random() * 400) + 1
-    });
-    angleDeal({
-       data:simN
-    });
-    
-}*/
-    setInterval(simulate,283);
     function startScanInt(){
         setInterval(updateCanvas,283/10);
     }
